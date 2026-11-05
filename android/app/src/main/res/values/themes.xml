@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 无 ActionBar 的轻量主题：不引入 AppCompat，包体更小、启动更快 -->
+    <style name="Theme.LuckyWheel" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_window</item>
+        <item name="android:statusBarColor">@color/splash_bg</item>
+        <item name="android:navigationBarColor">@color/splash_bg</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:colorAccent">#FF6E9E</item>
+    </style>
+
+</resources>

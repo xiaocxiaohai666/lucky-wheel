@@ -1,0 +1,161 @@
+/* ============================================================================
+   base.css — 主题令牌 / 全局样式 / 启动过渡 / 通用元件
+   改配色只动 :root，其它文件全部走变量。
+   ============================================================================ */
+
+:root {
+  /* 主色板（与 config.js 里的 palette 保持同一套调子） */
+  --pink:        #FFC2D9;
+  --pink-deep:   #FF86B0;
+  --pink-press:  #E23F76;
+  --purple:      #D8CBFF;
+
+  /* 文字与描边 */
+  --ink:         #5A3B50;
+  --ink-soft:    #A2889A;
+  --line:        rgba(196, 160, 182, .26);
+
+  /* 面 */
+  --card:        rgba(255, 255, 255, .78);
+
+  /* 圆角与阴影 */
+  --radius-lg:   26px;
+  --radius-md:   16px;
+  --radius-sm:   12px;
+  --shadow-soft: 0 14px 32px rgba(203, 154, 182, .20);
+
+  --font-cute: "PingFang SC", "Hiragino Sans GB", "HanziPen SC", "Yuanti SC",
+               "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: var(--font-cute);
+  color: var(--ink);
+  background:
+    radial-gradient(900px 620px at 8% -6%, #FFE7F2 0%, rgba(255,231,242,0) 62%),
+    radial-gradient(820px 560px at 96% 4%, #E6F1FF 0%, rgba(230,241,255,0) 64%),
+    linear-gradient(168deg, #FFF8FC 0%, #F7F2FF 46%, #EFF9FF 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+body.is-booting { overflow: hidden; }
+
+button { font-family: inherit; }
+
+/* ── 全屏画布层 ───────────────────────────────────────────── */
+.stars, .confetti {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  display: block;
+}
+.stars    { z-index: 0; }
+.confetti { z-index: 70; }
+
+/* ── 主布局 ───────────────────────────────────────────────── */
+.app {
+  position: relative; z-index: 1;
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vh, 44px) clamp(16px, 3vw, 32px) 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 348px;
+  gap: clamp(20px, 3vw, 36px);
+  align-items: start;
+}
+
+@media (max-width: 880px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── 启动过渡 ─────────────────────────────────────────────── */
+.boot {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center;
+  background: linear-gradient(160deg, #FFF3F9 0%, #F4EFFF 50%, #ECF8FF 100%);
+  transition: opacity .62s ease, visibility .62s;
+}
+.boot.is-gone { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.boot__card {
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+
+.boot__pie {
+  position: relative;
+  width: 76px; height: 76px; border-radius: 50%;
+  background: conic-gradient(
+    #FFC2D9 0 60deg, #FFE3A3 0 120deg, #B7EBD5 0 180deg,
+    #BFE0FF 0 240deg, #D8CBFF 0 300deg, #FFD2B8 0 360deg);
+  box-shadow: 0 8px 22px rgba(255,150,185,.35), inset 0 0 0 5px #fff;
+  animation: boot-spin 1.6s cubic-bezier(.5,.1,.4,.9) infinite;
+}
+.boot__pie::after {
+  content: '';
+  position: absolute; inset: 31%;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 3px #FFE1EC;
+}
+@keyframes boot-spin { to { transform: rotate(360deg); } }
+
+.boot__text {
+  margin: 0; font-size: 15px; letter-spacing: .1em; color: var(--ink-soft);
+}
+
+.boot__bar {
+  width: 150px; height: 8px; border-radius: 999px;
+  background: #FFE6F0; overflow: hidden;
+}
+.boot__bar i {
+  display: block; height: 100%; width: 0; border-radius: inherit;
+  background: linear-gradient(90deg, #FFC2D9, #CDBBFF, #B9DEFF);
+  animation: boot-fill 1.05s cubic-bezier(.4,.1,.2,1) forwards;
+}
+@keyframes boot-fill { to { width: 100%; } }
+
+/* ── 通用按钮 ─────────────────────────────────────────────── */
+.primary {
+  margin-top: 8px;
+  border: none; cursor: pointer;
+  padding: 12px 36px; border-radius: 999px;
+  font-size: 16px; font-weight: 800; letter-spacing: .1em; color: #fff;
+  background: linear-gradient(180deg, #FFA6C6, #FF6E9E);
+  box-shadow: 0 5px 0 var(--pink-press), 0 12px 22px rgba(241,77,134,.32);
+  transition: transform .16s, box-shadow .16s;
+}
+.primary:active {
+  transform: translateY(4px);
+  box-shadow: 0 1px 0 var(--pink-press), 0 6px 14px rgba(241,77,134,.3);
+}
+
+/* ── toast ────────────────────────────────────────────────── */
+.toast {
+  position: fixed; left: 50%; bottom: 36px; z-index: 80;
+  transform: translate(-50%, 14px);
+  opacity: 0;
+  padding: 10px 22px; border-radius: 999px;
+  background: rgba(90, 59, 80, .92);
+  color: #fff; font-size: 14px; letter-spacing: .04em;
+  max-width: 80vw; text-align: center;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ── 无障碍：减少动效 ─────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .boot__pie { animation-duration: 3.4s; }
+  .title span { animation: none !important; opacity: 1 !important; transform: none !important; }
+  body.is-ready .title span { animation: none !important; opacity: 1 !important; }
+}

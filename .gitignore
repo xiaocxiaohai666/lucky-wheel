@@ -1,0 +1,28 @@
+# ── 构建产物 ──────────────────────────────────────────
+android/build/
+android/app/build/
+android/app/src/main/assets/www/
+*.apk
+*.aab
+*.dex
+*.class
+
+# ── 签名与本地环境（绝不能提交）────────────────────────
+keystore/
+*.keystore
+*.jks
+local.properties
+
+# ── 依赖缓存 ─────────────────────────────────────────
+.gradle/
+node_modules/
+
+# ── 编辑器 / 系统 ────────────────────────────────────
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ── 日志 ────────────────────────────────────────────
+*.log

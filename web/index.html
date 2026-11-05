@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#FFE7F2" />
+  <meta name="description" content="好运转盘 · 把选择交给好运气" />
+  <title>好运转盘 · Lucky Wheel</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='88'>🍡</text></svg>" />
+  <link rel="stylesheet" href="assets/styles/base.css" />
+  <link rel="stylesheet" href="assets/styles/wheel.css" />
+  <link rel="stylesheet" href="assets/styles/panel.css" />
+</head>
+<body class="is-booting">
+
+  <!-- ── 启动过渡层：等第一帧画好再温柔地散开 ── -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot__card">
+      <div class="boot__pie"></div>
+      <p class="boot__text">正在把好运装进转盘…</p>
+      <div class="boot__bar"><i></i></div>
+    </div>
+  </div>
+
+  <!-- ── 背景飘落的小心心 / 中奖彩带 ── -->
+  <canvas class="stars" id="stars" aria-hidden="true"></canvas>
+  <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+
+  <main class="app">
+
+    <section class="stage">
+      <header class="head">
+        <h1 class="title" id="title"></h1>
+        <p class="subtitle">把选择交给好运气</p>
+      </header>
+
+      <div class="wheel-wrap" id="wheelWrap">
+        <canvas class="wheel" id="wheel" width="560" height="560"></canvas>
+
+        <div class="pointer" aria-hidden="true">
+          <svg viewBox="0 0 44 56" width="34" height="44" focusable="false">
+            <path d="M22 52 L6 18 A16 16 0 1 1 38 18 Z"
+                  fill="#ffffff" stroke="#FF86B0" stroke-width="4"
+                  stroke-linejoin="round" />
+            <circle cx="22" cy="19" r="5.5" fill="#FF86B0" />
+          </svg>
+        </div>
+
+        <button type="button" class="spin" id="spinBtn" aria-label="转一下">
+          <span id="spinLabel">转一下</span>
+        </button>
+      </div>
+
+      <p class="hint">按空格也可以转哦 · 每次速度都不一样</p>
+    </section>
+
+    <aside class="panel">
+      <div class="panel__head">
+        <h2>转盘里有什么</h2>
+        <span class="counter" id="counter">0 个</span>
+      </div>
+
+      <form class="adder" id="adder" autocomplete="off">
+        <input id="adderInput" class="adder__input" type="text" maxlength="14"
+               placeholder="添加一个选项…" aria-label="添加选项" />
+        <button type="submit" class="adder__btn" aria-label="添加选项">+</button>
+      </form>
+      <p class="adder__tip" id="adderTip">至少留 2 个，想加多少都行</p>
+
+      <ul class="list" id="list" aria-label="转盘选项列表"></ul>
+
+      <div class="panel__foot">
+        <button type="button" class="ghost" id="resetBtn">恢复默认</button>
+        <button type="button" class="ghost" id="soundBtn" aria-pressed="true">音效 · 开</button>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- ── 结果弹窗 ── -->
+  <div class="dialog" id="dialog" hidden>
+    <div class="dialog__mask" data-close></div>
+    <div class="dialog__card" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <div class="dialog__emoji" id="dialogEmoji">🎉</div>
+      <p class="dialog__kick" id="dialogTitle">就是它啦</p>
+      <p class="dialog__result" id="dialogResult">—</p>
+      <button type="button" class="primary" id="dialogOk">好耶</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ── 脚本按依赖顺序加载：底层工具 → 数据 → 音画 → UI → 引导 ── -->
+  <script src="src/util.js"></script>
+  <script src="src/config.js"></script>
+  <script src="src/store.js"></script>
+  <script src="src/sfx.js"></script>
+  <script src="src/particles.js"></script>
+  <script src="src/wheel.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/main.js"></script>
+</body>
+</html>

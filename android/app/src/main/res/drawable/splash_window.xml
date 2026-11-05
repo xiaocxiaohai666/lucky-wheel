@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 系统级启动背景：点下图标到 Activity 建好之间先显示这张图，
+     所以不会出现白屏闪烁。Activity 里的覆盖层再从同一张图标接手做动画。 -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/splash_bg" />
+        </shape>
+    </item>
+
+    <item
+        android:drawable="@drawable/ic_splash"
+        android:width="112dp"
+        android:height="112dp"
+        android:gravity="center" />
+
+</layer-list>
